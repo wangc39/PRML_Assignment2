@@ -13,7 +13,7 @@ from visualization import plot_curve, get_title, plot_gallery
 import utils
 
 import warnings
-warnings.filters('ignore')
+warnings.filterwarnings('ignore')
 
 
 def get_args():
@@ -49,23 +49,27 @@ def get_args():
 if __name__ == '__main__':
 
    args = get_args()
+   utils.set_seed(args.random_state)
    
    
    faceDataset = FaceDataset(args.csv_path, data_save_file=args.data_save_file)
    x_data, y_data = faceDataset.load_data()
    w, h = faceDataset.get_imgsize()
-
-   x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, test_size=args.test_size, random_state=args.random_state)
+   x_train, x_test, y_train, y_test = faceDataset.get_split_data(test_rate=0.2, shuffle=True)
    x_test_plot = x_test.reshape(-1, h, w)
+
+   # x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, test_size=args.test_size, random_state=args.random_state)
 
    # print(x_train.shape)
    # print(x_test.shape)
+   # print(y_train.shape)
+   # print(y_test.shape)
    
    n_classes = len(set(sorted(y_test)))
    target_names = ["person" + str(i) for i in range(1, 1+n_classes)]
 
 
-   print(set(sorted(y_test)), len(set(sorted(y_test))))
+   # print(set(sorted(y_test)), len(set(sorted(y_test))))
 
    ################################################## PCA ##################################################
 
@@ -109,10 +113,16 @@ if __name__ == '__main__':
    
    # svm_output_path = './output/SVM'
    # svm = SVMModel(x_train, x_test, y_train, y_test, output_path=svm_output_path)
-   # svm.PCASearch(ncomponents=list(range(1, 61)))
-   # score, y_predict, y_proba = svm.test_model()
+   # model, pca = svm.PCASearch(ncomponents=list(range(5, 61)))
+
+   # print("Best Parameter by search")
+   # print("pca: ", pca)
+   # print(model)
+
+   
+   # score, y_predict, y_proba = svm.test_model(model, pca)
    # print('Acc: {}'.format(score))
-   # svm.evaluate()
+   # svm.evaluate(target_names)
 
    # prediction_titles = [get_title(y_predict, y_test, target_names, i)
    #                for i in range(y_predict.shape[0])]
@@ -123,11 +133,16 @@ if __name__ == '__main__':
    ################################################## KNN ##################################################
 
    
-   knn_output_path = './output/KNN'
+   knn_output_path = './output/KNN1'
    knn = KNNModel(x_train, x_test, y_train, y_test, output_path=knn_output_path)
 
-   knn.PCASearch(ncomponents=list(range(1, 61)))
-   score, y_predict, y_proba = knn.test_model()
+   model, pca = knn.PCASearch(ncomponents=list(range(1, 61)))
+
+   print("Best Parameter by search")
+   print("pca: ", pca)
+   print(model)
+
+   score, y_predict, y_proba = knn.test_model(model, pca)
    print('Acc: {}'.format(score))
    knn.evaluate(target_names)
 

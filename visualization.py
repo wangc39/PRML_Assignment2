@@ -68,7 +68,7 @@ def plot_curve(x, y, values=[0], idxs=[0], interval=None, output_dir='visualizat
     plt.show()
 
 
-def plot_gallery(images, titles, h, w, n_row=3, n_col=4, save_path=None):
+def plot_gallery(images, titles, h, w, n_row=2, n_col=8, save_path=None):
     """Helper function to plot a gallery of portraits"""
     plt.figure(figsize=(1.8 * n_col, 2.4 * n_row))
     plt.subplots_adjust(bottom=0, left=.01, right=.99, top=.90, hspace=.35)

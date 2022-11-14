@@ -4,9 +4,12 @@ import json
 import time
 import random
 import datetime
-
 import numpy as np
 
+
+def set_seed(seed):
+    np.random.seed(seed)
+    random.seed(seed)
 
 
 
