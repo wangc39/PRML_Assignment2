@@ -111,23 +111,23 @@ if __name__ == '__main__':
 
    ################################################## SVM ##################################################
    
-   # svm_output_path = './output/SVM'
-   # svm = SVMModel(x_train, x_test, y_train, y_test, output_path=svm_output_path)
-   # model, pca = svm.PCASearch(ncomponents=list(range(5, 61)))
+   svm_output_path = './output/SVM1'
+   svm = SVMModel(x_train, x_test, y_train, y_test, output_path=svm_output_path)
+   model, pca = svm.PCASearch(ncomponents=list(range(5, 61)))
 
-   # print("Best Parameter by search")
-   # print("pca: ", pca)
-   # print(model)
+   print("Best Parameter by search")
+   print("pca: ", pca)
+   print(model)
 
    
-   # score, y_predict, y_proba = svm.test_model(model, pca)
-   # print('Acc: {}'.format(score))
-   # svm.evaluate(target_names)
+   score, y_predict, y_proba = svm.test_model(model, pca)
+   print('Acc: {}'.format(score))
+   svm.evaluate(target_names)
 
-   # prediction_titles = [get_title(y_predict, y_test, target_names, i)
-   #                for i in range(y_predict.shape[0])]
+   prediction_titles = [get_title(y_predict, y_test, target_names, i)
+                  for i in range(y_predict.shape[0])]
    
-   # plot_gallery(x_test_plot, prediction_titles, h, w, save_path=svm_output_path)
+   plot_gallery(x_test_plot, prediction_titles, h, w, save_path=svm_output_path)
 
 
    ################################################## KNN ##################################################
